@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cpudy8rhrdcxd"]
+
+[ext_resource type="Script" uid="uid://325eo7buoftk" path="res://src/scenes/scripts/pieces/KnightWhite.cs" id="1_4780r"]
+[ext_resource type="Texture2D" uid="uid://dymym8qx225vc" path="res://src/assets/Pieces/White/knight_w.png" id="1_evevu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4780r"]
+size = Vector2(64, 64)
+
+[node name="Knight_White" type="Area2D" unique_id=874543461]
+script = ExtResource("1_4780r")
+
+[node name="KnightWhiteSprite" type="Sprite2D" parent="." unique_id=448744757]
+texture = ExtResource("1_evevu")
+
+[node name="PieceCollider" type="CollisionShape2D" parent="." unique_id=621151410]
+shape = SubResource("RectangleShape2D_4780r")
+
+[connection signal="mouse_entered" from="." to="." method="_OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="_OnMouseExited"]

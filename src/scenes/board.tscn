@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c2x5ii7unmjn"]
+
+[ext_resource type="Texture2D" uid="uid://dxnm3oup6ef0f" path="res://src/assets/board.png" id="1_5kihm"]
+[ext_resource type="Script" uid="uid://b6dx7n3jlwpbd" path="res://src/scenes/scripts/Board.cs" id="1_ylks0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ylks0"]
+size = Vector2(512, 512)
+
+[node name="Board" type="Area2D" unique_id=1968970168]
+script = ExtResource("1_ylks0")
+
+[node name="BoardSprite" type="Sprite2D" parent="." unique_id=1773885408]
+texture = ExtResource("1_5kihm")
+
+[node name="BoardArea" type="CollisionShape2D" parent="." unique_id=698824743]
+shape = SubResource("RectangleShape2D_ylks0")

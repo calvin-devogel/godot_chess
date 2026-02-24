@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c4yyle4de8t2g"]
+
+[ext_resource type="Texture2D" uid="uid://ds2r8nklav6ky" path="res://src/assets/Pieces/Black/knight_b.png" id="1_sr8hp"]
+[ext_resource type="Script" uid="uid://bluinmnx5tja0" path="res://src/scenes/scripts/pieces/KnightBlack.cs" id="1_vkpn4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkpn4"]
+size = Vector2(64, 64)
+
+[node name="Knight_Black" type="Area2D" unique_id=1558658286]
+script = ExtResource("1_vkpn4")
+
+[node name="KnightBlackSprite" type="Sprite2D" parent="." unique_id=833801817]
+texture = ExtResource("1_sr8hp")
+
+[node name="PieceCollider" type="CollisionShape2D" parent="." unique_id=2107301470]
+shape = SubResource("RectangleShape2D_vkpn4")

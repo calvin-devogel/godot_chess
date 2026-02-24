@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://djs6sllhapkwo"]
+
+[ext_resource type="PackedScene" uid="uid://c2x5ii7unmjn" path="res://src/scenes/board.tscn" id="1_wou2w"]
+[ext_resource type="PackedScene" uid="uid://cpudy8rhrdcxd" path="res://src/scenes/pieces/white/knight_white.tscn" id="2_8cnrs"]
+
+[node name="Node2D" type="Node2D" unique_id=707964127]
+
+[node name="Board" parent="." unique_id=1968970168 instance=ExtResource("1_wou2w")]
+position = Vector2(512, 512)
+scale = Vector2(2, 2)
+
+[node name="Knight_White" parent="Board" unique_id=874543461 instance=ExtResource("2_8cnrs")]
+position = Vector2(-224, 224)
