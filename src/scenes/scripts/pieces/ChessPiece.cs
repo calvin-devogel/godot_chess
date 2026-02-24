@@ -4,6 +4,7 @@ using Godot;
 public partial class ChessPiece : Area2D
 {
     private Vector2 _positionBeforeDrag;
+    private Vector2 _dragOffset;
 
     public enum PieceColor
     {
@@ -40,28 +41,30 @@ public partial class ChessPiece : Area2D
 
     public override void _Input(InputEvent @event)
     {
-        if (state._IsMouseOver && @event is InputEventMouseButton mouseButtonEvent)
+        if (!state._IsMouseOver || state.isCaptured) return;
+
+        if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
         {
-            if (mouseButtonEvent.Pressed)
+            if (mouseEvent.Pressed && !state.isBeingDragged)
             {
-                GD.Print("Mouse button pressed on piece at position: " + this.Position);
                 state.isBeingDragged = true;
                 _positionBeforeDrag = this.GlobalPosition;
+                _dragOffset = this.GlobalPosition - mouseEvent.GlobalPosition;
             }
-            else if (mouseButtonEvent.IsReleased() && state.isBeingDragged)
+            else if (!mouseEvent.Pressed && state.isBeingDragged)
             {
                 state.isBeingDragged = false;
-                if (IsValidMove(_positionBeforeDrag, this.Position))
+                if (IsValidMove(_positionBeforeDrag, this.GlobalPosition) && IsWithinBounds(this.GlobalPosition))
                 {
                     SnapToSquare();
-                    state.position = this.Position;
+                    state.position = this.GlobalPosition;
                     state.hasMoved = true;
                 }
                 else
                 {
-                    this.Position = _positionBeforeDrag;
-                }   
-            }
+                    this.GlobalPosition = _positionBeforeDrag; // snap back to original position
+                }
+            }    
         }
     }
 
@@ -73,6 +76,10 @@ public partial class ChessPiece : Area2D
     protected virtual void SnapToSquare()
     {
         // snap the piece to the nearest square
+        float squareSize = 64f;
+        float snappedX = Mathf.Round(this.GlobalPosition.X / squareSize) * squareSize;
+        float snappedY = Mathf.Round(this.GlobalPosition.Y / squareSize) * squareSize;
+        this.GlobalPosition = new Vector2(snappedX, snappedY);
     }
 
     protected bool IsWithinBounds(Vector2 position)
@@ -93,15 +100,10 @@ public partial class ChessPiece : Area2D
 
     protected void _FollowMouse()
     {
-        if (this.state.isBeingDragged)
+        if (state.isBeingDragged)
         {
-            GD.Print("Dragging piece at position: " + this.Position);
-            Vector2 mousePosition = GetGlobalMousePosition();
-            Vector2 newPosition = mousePosition;
-            if (IsWithinBounds(newPosition))
-            {
-                this.Position = newPosition;
-            }
+            Vector2 mousePosition = GetGlobalMousePosition() + _dragOffset;
+            this.GlobalPosition = mousePosition;
         }
     }
 }
